@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - DTMP (Don't Touch My Phone)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .effective-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .policy-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        p {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-left: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #cbd5e1;
+        }
+
+        li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            color: #e2e8f0;
+        }
+
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            color: var(--text-main);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .policy-card {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">&larr; Back to App Website</a>
+        
+        <header>
+            <h1>Privacy Policy</h1>
+            <p class="effective-date">DTMP (Don't Touch My Phone) • Effective Date: <span id="current-date"></span></p>
+        </header>
+
+        <main class="policy-card">
+            <p>Thank you for choosing to be part of our community at <strong>DTMP (Don't Touch My Phone)</strong> ("we," "us," or "our"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about our policy or our practices with regards to your personal information, please contact us.</p>
+
+            <p>When you use our mobile application (the "App"), you trust us with your information. We take your privacy very seriously. In this privacy notice, we describe our privacy policy. We seek to explain to you in the clearest way possible what information we collect, how we use it, and what rights you have in relation to it.</p>
+
+            <h2>1. Information We Collect</h2>
+            <p>Our application requires certain permissions to function correctly, specifically to detect unauthorized access attempts to your device.</p>
+            <ul>
+                <li><strong>Camera Access:</strong> The App requests access to your device's front-facing camera. This permission is strictly used to capture a photograph ("selfie") when an incorrect PIN, pattern, or password is entered multiple times.</li>
+                <li><strong>Device Administrator / Overlay Permissions:</strong> The App may require special device permissions to detect when the screen is locked or unlocked, or when an incorrect unlock attempt is made.</li>
+            </ul>
+
+            <h2>2. How We Use Your Information</h2>
+            <p>The core functionality of DTMP revolves around your local device security:</p>
+            <ul>
+                <li><strong>Local Processing:</strong> When an unauthorized unlock attempt is detected, the App uses the camera to take a photo.</li>
+            </ul>
+            <div class="highlight-box">
+                <p><strong>No Data Transmission:</strong> We do not collect, transmit, or store your photos or personal data on any external servers. All processing happens entirely on your device.</p>
+            </div>
+
+            <h2>3. How and Where Your Data is Stored</h2>
+            <ul>
+                <li><strong>Local Storage Only:</strong> Any photos taken by the App are saved strictly locally on your device's internal storage or SD card.</li>
+                <li><strong>Your Control:</strong> You can view the captured photos directly from within the App, and you can delete them using your device's biometric verification. We cannot view, access, or retrieve any photos taken by the App.</li>
+            </ul>
+
+            <h2>4. Third-Party Sharing</h2>
+            <p>Because we do not transmit any data off your device, we <strong>do not</strong> share, sell, rent, or trade any of your information (including the captured photos) with any third parties for their promotional or marketing purposes.</p>
+
+            <h2>5. Security of Your Information</h2>
+            <p>While the photos are stored locally on your device, the security of those photos depends on the overall security of your device itself. We recommend keeping your device updated with the latest security patches and maintaining a strong primary unlock method.</p>
+
+            <h2>6. Children's Privacy</h2>
+            <p>These Services do not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children under 13. Given the offline and local nature of the app, no data is collected by us from users of any age.</p>
+
+            <h2>7. Changes to This Privacy Policy</h2>
+            <p>We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page.</p>
+
+            <h2>8. Contact Us</h2>
+            <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at:</p>
+            <ul>
+                <li><strong>Email:</strong> <a href="#" id="privacy-email-link">Loading...</a></li>
+            </ul>
+        </main>
+    </div>
+
+    <script>
+        // Set the current date automatically
+        const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', dateOptions);
+        
+        // Decrypt and inject email to prevent simple bot scraping
+        document.addEventListener("DOMContentLoaded", () => {
+            const emailStr = atob("a3Njb3JlbGFic0BnbWFpbC5jb20=");
+            const emailLink = document.getElementById("privacy-email-link");
+            if (emailLink) {
+                emailLink.textContent = emailStr;
+                emailLink.href = "mailto:" + emailStr;
+            }
+        });
+    </script>
+</body>
+</html>
