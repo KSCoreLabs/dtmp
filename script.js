@@ -1,3 +1,67 @@
+// Fetch latest APK from GitHub Releases API and trigger direct download
+async function downloadApk() {
+    const btn = document.getElementById('apk-download-btn');
+    const icon = btn.querySelector('i');
+    const smallText = btn.querySelector('.small-text');
+    const largeText = btn.querySelector('.large-text');
+
+    // Show loading state
+    icon.className = 'fa-solid fa-spinner fa-spin';
+    smallText.textContent = 'Fetching';
+    largeText.textContent = 'Latest...';
+    btn.disabled = true;
+
+    try {
+        const response = await fetch(
+            'https://api.github.com/repos/KSCoreLabs/DTMP-Updates/releases/latest',
+            { headers: { 'Accept': 'application/vnd.github+json' } }
+        );
+
+        if (!response.ok) throw new Error('GitHub API error: ' + response.status);
+
+        const data = await response.json();
+
+        // Find the .apk asset
+        const apkAsset = data.assets && data.assets.find(a => a.name.endsWith('.apk'));
+
+        if (!apkAsset) {
+            throw new Error('No APK found in the latest release.');
+        }
+
+        // Trigger download silently
+        const link = document.createElement('a');
+        link.href = apkAsset.browser_download_url;
+        link.download = apkAsset.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Show success state briefly
+        icon.className = 'fa-solid fa-circle-check';
+        smallText.textContent = 'Download';
+        largeText.textContent = 'Started!';
+
+        setTimeout(() => {
+            icon.className = 'fa-brands fa-android';
+            smallText.textContent = 'Download The';
+            largeText.textContent = 'APK';
+            btn.disabled = false;
+        }, 3000);
+
+    } catch (err) {
+        console.error('APK download failed:', err);
+
+        // Reset button
+        icon.className = 'fa-brands fa-android';
+        smallText.textContent = 'Download The';
+        largeText.textContent = 'APK';
+        btn.disabled = false;
+
+        // Show error toast
+        showUnavailableToast('APK Download (check connection)');
+    }
+}
+
 function showUnavailableToast(platformName) {
     const toastContainer = document.getElementById('toast-container');
     
