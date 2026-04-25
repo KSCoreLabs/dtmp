@@ -114,52 +114,92 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Handle Contact Form Submission
-function handleContactSubmit(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('contact-name').value;
-    const email = document.getElementById('contact-email').value;
-    const message = document.getElementById('contact-message').value;
-    
-    // Construct mailto link
-    const subject = encodeURIComponent(`DTMP Contact Form - ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    const targetEmail = atob("a3Njb3JlbGFic0BnbWFpbC5jb20="); // Encrypted email
-    const mailtoUrl = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
-    
-    // Open default email client robustly
-    const link = document.createElement('a');
-    link.href = mailtoUrl;
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Show success toast
+// ── Contact Form → Google Sheets (secured) ───────────────────
+(function () {
+    try {
+        // Each segment is base64-encoded. Joined at runtime — not plain text in source.
+        // TODO: Replace these placeholders with your new DTMP Google Sheet Apps Script URL chunks
+        const _a = atob('aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy8='); // base path (keep this)
+        const _b = atob('QUtmeWNidzFPQkxhYllRQjZyX0tuWG05a3dtUUZFRkFqd3oxNA==');  // ID chunk 1 (Replace 'CHUNK1_PLACEHOLDER' with your actual base64)
+        const _c = atob('Xzc1VVZTb2RrV0dobWVwZi1SOENXbHNpblY5UzliMW5rVG5Pdw=='); // ID chunk 2 (Replace 'CHUNK2_PLACEHOLDER' with your actual base64)
+        const _d = atob('L2V4ZWM=');                                              // /exec (keep this)
+        const ENDPOINT = _a + _b + _c + _d;
+
+        // Must exactly match SECRET_TOKEN in your new DTMP Apps Script
+        const _tk = atob('RFRNUC0yMDI2LVNFQ1JFVA=='); // Default: DTMP-2026-SECRET
+
+        const form    = document.getElementById('contact-form');
+        const btnText = form ? form.querySelector('.cf-btn-text') : null;
+        const btnLoad = form ? form.querySelector('.cf-btn-loading') : null;
+        const submit  = document.getElementById('cf-submit');
+
+        if (!form) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!form.checkValidity()) { form.reportValidity(); return; }
+
+            if (btnText) btnText.hidden = true;
+            if (btnLoad) btnLoad.hidden = false;
+            if (submit) submit.disabled = true;
+
+            const payload = {
+                token:   _tk,
+                name:    document.getElementById('cf-name').value.trim(),
+                email:   document.getElementById('cf-email').value.trim(),
+                subject: 'DTMP Webpage Feedback', // Hardcoded subject for DTMP
+                message: document.getElementById('cf-message').value.trim(),
+                date:    new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+            };
+
+            try {
+                await fetch(ENDPOINT, {
+                    method:  'POST',
+                    mode:    'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify(payload),
+                });
+                showContactToast('success');
+                form.reset();
+            } catch (fetchErr) {
+                showContactToast('error');
+            } finally {
+                if (btnText) btnText.hidden = false;
+                if (btnLoad) btnLoad.hidden = true;
+                if (submit) submit.disabled = false;
+            }
+        });
+
+    } catch (setupErr) {
+        // If base64 decode fails, at least stop form from page-refreshing
+        const form = document.getElementById('contact-form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showContactToast('error');
+            });
+        }
+        console.error('[DTMP Contact] Setup error:', setupErr);
+    }
+}());
+
+function showContactToast(type) {
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.style.background = 'rgba(52, 199, 89, 0.9)'; // Green success color
     
-    toast.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-circle-check"></i>
-                <span>Opening your email client...</span>
-            </div>
-            <div style="font-size: 0.85rem; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.2); margin-top: 5px;">
-                Didn't open? <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${targetEmail}&su=${subject}&body=${body}" target="_blank" style="color: #fff; text-decoration: underline; font-weight: bold;">Click here to use Web Gmail</a>
-            </div>
-        </div>
-    `;
+    if (type === 'success') {
+        toast.style.background = 'rgba(52, 199, 89, 0.9)'; // Green success
+        toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Message sent successfully! We'll be in touch.</span>`;
+    } else {
+        toast.style.background = 'rgba(255, 59, 48, 0.9)'; // Red error
+        toast.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>Failed to send message. Please try again.</span>`;
+    }
     
     toastContainer.appendChild(toast);
     
-    // Reset form
-    event.target.reset();
-    
-    // Increased timeout to give users time to click the fallback link
     setTimeout(() => {
         toast.classList.add('fade-out');
         setTimeout(() => {
@@ -167,7 +207,7 @@ function handleContactSubmit(event) {
                 toastContainer.removeChild(toast);
             }
         }, 300);
-    }, 10000);
+    }, 4000);
 }
 
 // Mobile menu toggle

@@ -86,8 +86,13 @@
     <section id="about" class="about-section">
         <h2>About the Developer</h2>
         <div class="developer-profile">
-            <div class="profile-image">
-                <img src="images/about_developer.webp" alt="KSCoreLabs Logo">
+            <div class="profile-logo-col" style="display: flex; flex-direction: column; align-items: center; gap: 1rem; flex-shrink: 0;">
+                <div class="profile-image">
+                    <img src="images/about_developer.webp" alt="KSCoreLabs Logo">
+                </div>
+                <a href="https://kscorelabs.github.io/" target="_blank" class="official-site-btn">
+                    <i class="fa-solid fa-globe"></i> Official Website
+                </a>
             </div>
             <div class="profile-info">
                 <h3>KSCoreLabs</h3>
@@ -101,10 +106,8 @@
                 </div>
                 <div class="owner-details">
                     <h4>Krishna Singh</h4>
-                    <p class="owner-role">Founder OF KSCoreLabs <br>+Student</p>
+                    <p class="owner-role">*Founder OF KSCoreLabs<br>*Owner <br>*Student</p>
                 </div>
-                <div class="social-links" style="margin-top: 0.5rem;">
-                    <a href="https://krishna-0006.github.io/My-Portfolio/" target="_blank" class="social-btn"><i class="fa-solid fa-globe"></i> Portfolio</a>
                 </div>
             </div>
         </div>
@@ -133,12 +136,12 @@
                 </div>
             </button>
 
-            <!-- Realme App Market (Unavailable) -->
-            <button onclick="showUnavailableToast('Realme App Market')" class="store-btn realme-btn">
-                <div class="realme-logo">R</div>
+            <!-- Indus App Store (Unavailable) -->
+            <button onclick="showUnavailableToast('Indus App Store')" class="store-btn indus-btn">
+                <div class="indus-logo"><i class="fa-solid fa-store"></i></div>
                 <div class="btn-text">
                     <span class="small-text">Available on</span>
-                    <span class="large-text">App Market</span>
+                    <span class="large-text">Indus App Store</span>
                 </div>
             </button>
         </div>
@@ -162,18 +165,24 @@
                     </div>
                 </div>
             </div>
-            <form class="contact-form" onsubmit="handleContactSubmit(event)">
-                <div class="input-group">
-                    <input type="text" id="contact-name" placeholder="Your Name" required>
+            <form class="contact-form" id="contact-form">
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="cf-name" placeholder="Your Name" required>
                 </div>
-                <div class="input-group">
-                    <input type="email" id="contact-email" placeholder="Your Email" required>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="cf-email" placeholder="Your Email" required>
                 </div>
-                <div class="input-group">
-                    <textarea id="contact-message" rows="5" placeholder="Your Message" required></textarea>
+                <div class="input-wrapper align-top">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <textarea id="cf-message" rows="5" placeholder="Your Message" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary btn-submit">
-                    <span>Send Message</span> <i class="fa-solid fa-paper-plane"></i>
+                <button type="submit" class="btn btn-primary btn-submit" id="cf-submit">
+                    <span class="cf-btn-text">Send <i class="fa-solid fa-satellite-dish"></i></span>
+                    <span class="cf-btn-loading" hidden style="display:none;">
+                        Sending <span class="loading-dots"></span>
+                    </span>
                 </button>
             </form>
         </div>
