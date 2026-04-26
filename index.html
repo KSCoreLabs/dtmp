@@ -75,12 +75,13 @@
 
     <section id="screenshots" class="screenshots">
         <h2>App Interface</h2>
-        <div class="screenshot-carousel">
-            <img src="images/Screenshot_2026-04-22-11-12-11-96_e4ff548b564c4d183ec3adff2c8306e6.jpg.webp" alt="DTMP Screenshot 1" class="app-screenshot">
-            <img src="images/Screenshot_2026-04-22-11-12-20-12_e4ff548b564c4d183ec3adff2c8306e6.jpg.webp" alt="DTMP Screenshot 2" class="app-screenshot">
-            <img src="images/Screenshot_2026-04-22-11-12-25-33_e4ff548b564c4d183ec3adff2c8306e6.jpg.webp" alt="DTMP Screenshot 3" class="app-screenshot">
-            <img src="images/Screenshot_2026-04-22-11-12-40-97_e4ff548b564c4d183ec3adff2c8306e6.jpg.webp" alt="DTMP Screenshot 4" class="app-screenshot">
+        <div class="card-stack" id="card-stack">
+            <img src="images/Screenshot_2026-04-22-11-12-11-96_e4ff548b564c4d183ec3adff2c8306e6.jpg.webp" alt="DTMP Screenshot 1" class="app-screenshot stack-0">
+            <img src="images/Screenshot_2026-04-22-11-12-20-12_e4ff548b564c4d183ec3adff2c8306e6.jpg.webp" alt="DTMP Screenshot 2" class="app-screenshot stack-1">
+            <img src="images/Screenshot_2026-04-22-11-12-25-33_e4ff548b564c4d183ec3adff2c8306e6.jpg.webp" alt="DTMP Screenshot 3" class="app-screenshot stack-2">
+            <img src="images/Screenshot_2026-04-22-11-12-40-97_e4ff548b564c4d183ec3adff2c8306e6.jpg.webp" alt="DTMP Screenshot 4" class="app-screenshot stack-3">
         </div>
+        <div class="swipe-hint"><i class="fa-solid fa-hand-pointer"></i> Click any card to bring it front</div>
     </section>
 
     <section id="about" class="about-section">
@@ -138,7 +139,13 @@
 
             <!-- Indus App Store (Unavailable) -->
             <button onclick="showUnavailableToast('Indus App Store')" class="store-btn indus-btn">
-                <div class="indus-logo"><i class="fa-solid fa-store"></i></div>
+                <div class="indus-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="24" cy="11.684" r="7.184" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.816 19.895L24 24.514l7.184-4.619v7.185L24 31.698l-7.184-4.618z"/>
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.816 31.697L24 36.316l7.184-4.619v7.185L24 43.5l-7.184-4.618z"/>
+                    </svg>
+                </div>
                 <div class="btn-text">
                     <span class="small-text">Available on</span>
                     <span class="large-text">Indus App Store</span>

@@ -228,3 +228,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// Fanned Card Stack Logic
+document.addEventListener("DOMContentLoaded", () => {
+    const stackContainer = document.getElementById('card-stack');
+    if (!stackContainer) return;
+
+    const cards = Array.from(stackContainer.querySelectorAll('.app-screenshot'));
+    
+    // The array represents the visual order of cards:
+    // index 0 is front (stack-0), index 1 is stack-1, etc.
+    // The values are the original DOM indices of the elements.
+    let cardOrder = cards.map((_, index) => index);
+
+    function updateStack() {
+        cards.forEach((card, domIndex) => {
+            // Find the visual position of this specific card
+            const stackPosition = cardOrder.indexOf(domIndex);
+            
+            // Clean out old stack classes
+            card.className = card.className.replace(/stack-\d+/g, '').trim();
+            
+            // Apply new stack class
+            card.classList.add(`stack-${stackPosition}`);
+        });
+    }
+
+    cards.forEach((card, domIndex) => {
+        card.addEventListener('click', () => {
+            const currentPosition = cardOrder.indexOf(domIndex);
+            
+            // If already at the front, do nothing
+            if (currentPosition === 0) return;
+            
+            // Remove the clicked card from its current position
+            cardOrder.splice(currentPosition, 1);
+            
+            // Add it to the front of the array
+            cardOrder.unshift(domIndex);
+            
+            updateStack();
+        });
+    });
+
+    // Initialize positions
+    updateStack();
+});
