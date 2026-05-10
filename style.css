@@ -23,6 +23,12 @@ body {
     overflow-x: hidden;
 }
 
+/* Ensure all direct page content sits above canvas */
+.navbar, header, section, footer {
+    position: relative;
+    z-index: 1;
+}
+
 /* Navbar */
 .navbar {
     position: fixed;

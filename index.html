@@ -7,9 +7,81 @@
     <meta name="description" content="DTMP (Don't Touch My Phone) - Protect your phone from unauthorized access with ease.">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* ── Ambient canvas layer ── */
+        #ambient-canvas {
+            position: fixed; inset: 0; z-index: 0;
+            pointer-events: none;
+        }
+        /* ── Floating micro-particles ── */
+        #site-particles {
+            position: fixed; inset: 0; z-index: 0;
+            pointer-events: none; overflow: hidden;
+        }
+        .site-particle {
+            position: absolute; border-radius: 50%;
+            animation: sp-float linear infinite;
+        }
+        @keyframes sp-float {
+            0%   { transform: translateY(110vh) scale(0); opacity: 0; }
+            8%   { opacity: 0.55; }
+            92%  { opacity: 0.3; }
+            100% { transform: translateY(-60px) scale(1); opacity: 0; }
+        }
+        /* ── Scroll-reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Stagger children */
+        .reveal-stagger > * {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal-stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0.05s; }
+        .reveal-stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.18s; }
+        .reveal-stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.31s; }
+        /* Hero text slide-in */
+        .hero-text h1 { animation: heroH1 1s cubic-bezier(0.22,1,0.36,1) both; }
+        .hero-text p  { animation: heroP  1s 0.2s cubic-bezier(0.22,1,0.36,1) both; }
+        .hero-buttons { animation: heroP  1s 0.38s cubic-bezier(0.22,1,0.36,1) both; }
+        @keyframes heroH1 { from{opacity:0;transform:translateY(-24px)} to{opacity:1;transform:none} }
+        @keyframes heroP  { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:none} }
+        /* Feature card glow on hover */
+        .feature-card {
+            position: relative; overflow: hidden;
+        }
+        .feature-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(0,210,255,0.08) 0%, transparent 70%);
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .feature-card:hover::before { opacity: 1; }
+        /* Navbar scroll indicator */
+        .navbar.scrolled {
+            background: rgba(10,10,16,0.97);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+        /* Glitch hero text */
+        .glitch-text {
+            position: relative;
+            background: linear-gradient(90deg, #00d2ff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
 </head>
 <body>
+    <canvas id="ambient-canvas"></canvas>
+    <div id="site-particles"></div>
     <div id="toast-container"></div>
 
     <nav class="navbar">
@@ -26,7 +98,7 @@
                 <li><a href="#features">Features</a></li>
                 <li><a href="#screenshots">Screenshots</a></li>
                 <li><a href="#about">About Developer</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="#download" class="nav-btn">Download</a></li>
             </ul>
         </div>
@@ -39,7 +111,7 @@
                 <p><strong>Don't Touch My Phone (DTMP)</strong> ensures your device stays secure. Get notified immediately if someone tries to access your phone without permission.</p>
                 <div class="hero-buttons">
                     <a href="#download" class="btn btn-primary">Get the App</a>
-                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                    <a href="contact.html" class="btn btn-secondary">Contact Us</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -51,7 +123,7 @@
         </div>
     </header>
 
-    <section id="features" class="features">
+    <section id="features" class="features reveal-stagger">
         <h2>Why Choose DTMP?</h2>
         <div class="feature-grid">
             <div class="feature-card">
@@ -84,7 +156,7 @@
         <div class="swipe-hint"><i class="fa-solid fa-hand-pointer"></i> Click any card to bring it front</div>
     </section>
 
-    <section id="about" class="about-section">
+    <section id="about" class="about-section reveal">
         <h2>About the Developer</h2>
         <div class="developer-profile">
             <div class="profile-logo-col" style="display: flex; flex-direction: column; align-items: center; gap: 1rem; flex-shrink: 0;">
@@ -114,7 +186,7 @@
         </div>
     </section>
 
-    <section id="download" class="download-section">
+    <section id="download" class="download-section reveal">
         <h2>Download DTMP</h2>
         <p>Get the latest version of DTMP to secure your phone today.</p>
         
@@ -154,46 +226,7 @@
         </div>
     </section>
 
-    <section id="contact" class="contact-section">
-        <h2>Contact Us</h2>
-        <p>Have questions or feedback? We'd love to hear from you.</p>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Get in Touch</h3>
-                <p>Feel free to reach out for support, suggestions, or business inquiries. We typically respond within 24 hours.</p>
-                <div class="info-items">
-                    <div class="info-item">
-                        <i class="fa-solid fa-envelope"></i>
-                        <span id="contact-email-display">Loading...</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <span>India</span>
-                    </div>
-                </div>
-            </div>
-            <form class="contact-form" id="contact-form">
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" id="cf-name" placeholder="Your Name" required>
-                </div>
-                <div class="input-wrapper">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="email" id="cf-email" placeholder="Your Email" required>
-                </div>
-                <div class="input-wrapper align-top">
-                    <i class="fa-solid fa-comment-dots"></i>
-                    <textarea id="cf-message" rows="5" placeholder="Your Message" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary btn-submit" id="cf-submit">
-                    <span class="cf-btn-text">Send <i class="fa-solid fa-satellite-dish"></i></span>
-                    <span class="cf-btn-loading" hidden style="display:none;">
-                        Sending <span class="loading-dots"></span>
-                    </span>
-                </button>
-            </form>
-        </div>
-    </section>
+
 
     <footer>
         <div class="footer-content">
@@ -202,10 +235,96 @@
                 <h2>DTMP</h2>
             </div>
             <p>&copy; 2026 DTMP App. All rights reserved.</p>
-            <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>
+            <div style="display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;">
+                <a href="privacy-policy.html" class="privacy-link">Privacy Policy</a>
+                <a href="contact.html" class="privacy-link">Contact Us</a>
+            </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+    /* ── Ambient animated orbs (canvas) ── */
+    (function(){
+        const canvas = document.getElementById('ambient-canvas');
+        const ctx = canvas.getContext('2d');
+        let W, H;
+        const orbs = [];
+        const COLORS = [
+            [0, 210, 255],
+            [59, 130, 246],
+            [167, 139, 250],
+            [6, 182, 212],
+        ];
+        function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+        resize();
+        window.addEventListener('resize', resize);
+        for(let i=0;i<5;i++){
+            const c = COLORS[i % COLORS.length];
+            orbs.push({
+                x: Math.random()*W, y: Math.random()*H,
+                r: 180 + Math.random()*220,
+                vx: (Math.random()-0.5)*0.3,
+                vy: (Math.random()-0.5)*0.3,
+                color: c, alpha: 0.06 + Math.random()*0.07
+            });
+        }
+        function draw(){
+            ctx.clearRect(0,0,W,H);
+            orbs.forEach(o=>{
+                o.x += o.vx; o.y += o.vy;
+                if(o.x < -o.r) o.x = W+o.r;
+                if(o.x > W+o.r) o.x = -o.r;
+                if(o.y < -o.r) o.y = H+o.r;
+                if(o.y > H+o.r) o.y = -o.r;
+                const g = ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);
+                g.addColorStop(0, `rgba(${o.color.join(',')},${o.alpha})`);
+                g.addColorStop(1, `rgba(${o.color.join(',')},0)`);
+                ctx.beginPath();
+                ctx.arc(o.x,o.y,o.r,0,Math.PI*2);
+                ctx.fillStyle = g;
+                ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    /* ── Floating micro-particles ── */
+    (function(){
+        const cont = document.getElementById('site-particles');
+        const palette = ['#00d2ff','#3b82f6','#a78bfa','#06b6d4','#818cf8'];
+        for(let i=0;i<30;i++){
+            const el = document.createElement('div');
+            el.className = 'site-particle';
+            const sz = Math.random()*3.5+1.5;
+            el.style.cssText = `
+                width:${sz}px;height:${sz}px;
+                left:${Math.random()*100}%;
+                background:${palette[Math.floor(Math.random()*palette.length)]};
+                box-shadow:0 0 ${sz*3}px ${palette[Math.floor(Math.random()*palette.length)]};
+                animation-duration:${12+Math.random()*20}s;
+                animation-delay:${Math.random()*18}s;
+            `;
+            cont.appendChild(el);
+        }
+    })();
+
+    /* ── Scroll-reveal observer ── */
+    (function(){
+        const els = document.querySelectorAll('.reveal, .reveal-stagger');
+        const obs = new IntersectionObserver(entries=>{
+            entries.forEach(e=>{
+                if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+            });
+        }, { threshold: 0.12 });
+        els.forEach(el=>obs.observe(el));
+    })();
+
+    /* ── Navbar scroll style ── */
+    window.addEventListener('scroll', ()=>{
+        document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 40);
+    });
+    </script>
 </body>
 </html>

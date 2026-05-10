@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - DTMP (Don't Touch My Phone)</title>
+    <meta name="description" content="Get in touch with KSCoreLabs — the team behind DTMP. Send us your feedback, support queries, or business inquiries.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --bg: #060b18;
+            --accent: #3b82f6;
+            --accent2: #a78bfa;
+            --accent3: #06b6d4;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --card-bg: rgba(15, 23, 42, 0.75);
+            --border: rgba(148, 163, 184, 0.12);
+            --glow: rgba(59, 130, 246, 0.35);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(ellipse 80% 60% at 20% 0%, rgba(59,130,246,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(167,139,250,0.15) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 30% at 50% 50%, rgba(6,182,212,0.07) 0%, transparent 70%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── Floating particles ── */
+        #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: float-up linear infinite;
+        }
+        @keyframes float-up {
+            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+            10%  { opacity: 0.5; }
+            90%  { opacity: 0.3; }
+            100% { transform: translateY(-20px) scale(1); opacity: 0; }
+        }
+
+        /* ── Back button ── */
+        .back-btn {
+            position: fixed; top: 1.5rem; left: 1.5rem; z-index: 100;
+            display: flex; align-items: center; gap: 0.5rem;
+            color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.9rem;
+            background: rgba(15,23,42,0.7); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); border-radius: 50px;
+            padding: 0.5rem 1.1rem; transition: all 0.3s ease;
+        }
+        .back-btn:hover { color: var(--text); border-color: var(--accent); box-shadow: 0 0 18px var(--glow); }
+
+        /* ── Page wrapper ── */
+        .page {
+            position: relative; z-index: 1;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 5rem 1.5rem 4rem;
+            min-height: 100vh;
+        }
+
+        /* ── Header ── */
+        .page-header { text-align: center; margin-bottom: 3.5rem; animation: fadeDown 0.8s ease; }
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.3);
+            border-radius: 50px; padding: 0.35rem 1rem; font-size: 0.8rem;
+            color: #60a5fa; margin-bottom: 1.2rem; letter-spacing: 0.08em; text-transform: uppercase;
+        }
+        .page-header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #06b6d4 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; line-height: 1.15; margin-bottom: 1rem;
+        }
+        .page-header p { color: var(--muted); font-size: 1.05rem; max-width: 480px; margin: 0 auto; }
+
+        /* ── 3D Card scene ── */
+        .scene {
+            perspective: 1200px;
+            width: 100%; max-width: 900px;
+            animation: fadeUp 0.9s 0.2s ease both;
+        }
+        .card-3d {
+            transform-style: preserve-3d;
+            background: var(--card-bg);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow:
+                0 0 0 1px rgba(59,130,246,0.08),
+                0 30px 80px -10px rgba(0,0,0,0.6),
+                0 0 60px -20px var(--glow),
+                inset 0 1px 0 rgba(255,255,255,0.06);
+            padding: 3rem 2.5rem;
+            transition: transform 0.15s ease, box-shadow 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .card-3d::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg,
+                rgba(59,130,246,0.04) 0%,
+                transparent 40%,
+                rgba(167,139,250,0.04) 100%);
+            pointer-events: none;
+        }
+        /* glare layer */
+        .card-3d::after {
+            content: '';
+            position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.04) 0%, transparent 60%);
+            pointer-events: none; transform: rotate(-15deg);
+        }
+
+        /* ── Grid layout inside card ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1px 1.6fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        /* ── Left info panel ── */
+        .info-panel { display: flex; flex-direction: column; gap: 1.8rem; }
+        .info-panel h2 {
+            font-size: 1.5rem; font-weight: 700;
+            background: linear-gradient(135deg, #f1f5f9, #94a3b8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .info-panel p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+
+        .info-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.9rem 1.1rem;
+            background: rgba(59,130,246,0.07);
+            border: 1px solid rgba(59,130,246,0.15);
+            border-radius: 14px;
+            transition: all 0.3s ease;
+        }
+        .info-item:hover { background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.3); transform: translateX(4px); }
+        .info-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: linear-gradient(135deg, rgba(59,130,246,0.3), rgba(167,139,250,0.2));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: #60a5fa; flex-shrink: 0;
+        }
+        .info-text { display: flex; flex-direction: column; gap: 0.15rem; }
+        .info-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+        .info-value { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+        .divider { height: 1px; background: var(--border); border: none; }
+
+        .response-badge {
+            display: flex; align-items: center; gap: 0.6rem;
+            font-size: 0.82rem; color: #4ade80;
+        }
+        .response-badge .dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #4ade80;
+            box-shadow: 0 0 8px #4ade80; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+        /* ── Divider line ── */
+        .panel-divider {
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--border) 20%, var(--border) 80%, transparent);
+            align-self: stretch;
+        }
+
+        /* ── Right form ── */
+        .form-panel { display: flex; flex-direction: column; gap: 1.2rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .field {
+            display: flex; flex-direction: column; gap: 0.4rem;
+        }
+        .field label {
+            font-size: 0.8rem; color: var(--muted); text-transform: uppercase;
+            letter-spacing: 0.07em; font-weight: 600;
+        }
+        .input-wrap {
+            position: relative; display: flex; align-items: center;
+        }
+        .input-wrap i {
+            position: absolute; left: 1rem; color: var(--muted);
+            font-size: 0.9rem; pointer-events: none; transition: color 0.3s;
+        }
+        .input-wrap input,
+        .input-wrap textarea,
+        .input-wrap select {
+            width: 100%; padding: 0.85rem 1rem 0.85rem 2.7rem;
+            background: rgba(15,23,42,0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px; color: var(--text);
+            font-family: 'Outfit', sans-serif; font-size: 0.95rem;
+            outline: none; transition: all 0.3s ease;
+            -webkit-appearance: none;
+        }
+        .input-wrap textarea {
+            resize: vertical; min-height: 120px;
+            padding-top: 0.85rem; line-height: 1.6;
+        }
+        .input-wrap input::placeholder,
+        .input-wrap textarea::placeholder { color: rgba(148,163,184,0.5); }
+        .input-wrap input:focus,
+        .input-wrap textarea:focus,
+        .input-wrap select:focus {
+            border-color: var(--accent);
+            background: rgba(59,130,246,0.06);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.15), 0 0 20px rgba(59,130,246,0.1);
+        }
+        .input-wrap input:focus ~ i,
+        .input-wrap textarea:focus ~ i { color: var(--accent); }
+        .input-wrap:focus-within i { color: var(--accent); }
+
+        /* ── Submit button ── */
+        .submit-btn {
+            display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+            padding: 1rem 2rem; border: none; border-radius: 14px; cursor: pointer;
+            font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #a78bfa 100%);
+            background-size: 200% 200%; background-position: 0% 50%;
+            color: #fff; letter-spacing: 0.03em;
+            box-shadow: 0 8px 30px rgba(59,130,246,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+            transition: all 0.4s ease;
+            position: relative; overflow: hidden;
+        }
+        .submit-btn::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+            border-radius: inherit;
+        }
+        .submit-btn:hover {
+            background-position: 100% 50%;
+            box-shadow: 0 12px 40px rgba(99,102,241,0.5), 0 0 60px rgba(59,130,246,0.2);
+            transform: translateY(-2px);
+        }
+        .submit-btn:active { transform: translateY(0px); }
+        .submit-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Toast ── */
+        #toast-container {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+            display: flex; flex-direction: column; gap: 0.75rem;
+        }
+        .toast {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.9rem 1.4rem; border-radius: 12px;
+            font-size: 0.9rem; font-weight: 500; color: #fff;
+            backdrop-filter: blur(12px);
+            background: rgba(30,41,59,0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            animation: slideIn 0.35s ease;
+        }
+        .toast.fade-out { animation: slideOut 0.3s ease forwards; }
+        @keyframes slideIn { from{opacity:0;transform:translateX(60px)} to{opacity:1;transform:translateX(0)} }
+        @keyframes slideOut { to{opacity:0;transform:translateX(60px)} }
+
+        /* ── Animations ── */
+        @keyframes fadeDown { from{opacity:0;transform:translateY(-24px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeUp   { from{opacity:0;transform:translateY(30px)}  to{opacity:1;transform:translateY(0)} }
+
+        /* ── Responsive ── */
+        @media(max-width:720px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .panel-divider { width: 100%; height: 1px; align-self: auto; min-height: 1px; }
+            .form-row { grid-template-columns: 1fr; }
+            .card-3d { padding: 2rem 1.25rem; }
+            .back-btn { top: 1rem; left: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div id="particles"></div>
+<div id="toast-container"></div>
+
+<a href="index.html" class="back-btn" id="back-link">
+    <i class="fa-solid fa-arrow-left"></i> Back to DTMP
+</a>
+
+<div class="page">
+    <header class="page-header">
+        <div class="badge"><i class="fa-solid fa-satellite-dish"></i> KSCoreLabs Support</div>
+        <h1>Get In Touch</h1>
+        <p>Have a question, bug report, or just want to say hi? We'd love to hear from you.</p>
+    </header>
+
+    <div class="scene" id="scene">
+        <div class="card-3d" id="card3d">
+            <div class="contact-grid">
+
+                <!-- LEFT: Info Panel -->
+                <div class="info-panel">
+                    <div>
+                        <h2>Let's Talk</h2>
+                        <p style="margin-top:0.5rem;">We're a small indie team and we personally read every message. Reach out anytime!</p>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="info-text">
+                            <span class="info-label">Email</span>
+                            <span class="info-value" id="contact-email-display">Loading…</span>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="info-text">
+                            <span class="info-label">Location</span>
+                            <span class="info-value">India 🇮🇳</span>
+                        </div>
+                    </div>
+
+                
+
+                    <hr class="divider">
+
+                    <div class="response-badge">
+                        <div class="dot"></div>
+                        Typically responds within 24 hours
+                    </div>
+                </div>
+
+                <!-- Vertical divider -->
+                <div class="panel-divider" aria-hidden="true"></div>
+
+                <!-- RIGHT: Form -->
+                <form class="form-panel" id="contact-form" novalidate>
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="cf-name">Your Name</label>
+                            <div class="input-wrap">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" id="cf-name" placeholder="Name" required autocomplete="name">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="cf-email">Email Address</label>
+                            <div class="input-wrap">
+                                <i class="fa-solid fa-envelope"></i>
+                                <input type="email" id="cf-email" placeholder="you@example.com" required autocomplete="email">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="cf-subject">Subject</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-tag"></i>
+                            <input type="text" id="cf-subject" placeholder="Bug Report / Feature Request / General…" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="cf-message">Your Message</label>
+                        <div class="input-wrap" style="align-items:flex-start;">
+                            <i class="fa-solid fa-comment-dots" style="top:0.9rem;position:absolute;"></i>
+                            <textarea id="cf-message" placeholder="Write your message here…" required></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="cf-submit">
+                        <i class="fa-solid fa-paper-plane" id="cf-icon"></i>
+                        <span id="cf-btn-text">Send Message</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* ── Particles ── */
+    (function(){
+        const container = document.getElementById('particles');
+        const colors = ['#3b82f6','#a78bfa','#06b6d4','#818cf8'];
+        for(let i=0; i<28; i++){
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random()*4+2;
+            p.style.cssText = `
+                width:${size}px;height:${size}px;
+                left:${Math.random()*100}%;
+                background:${colors[Math.floor(Math.random()*colors.length)]};
+                animation-duration:${10+Math.random()*18}s;
+                animation-delay:${Math.random()*15}s;
+            `;
+            container.appendChild(p);
+        }
+    })();
+
+    /* ── 3D tilt on mouse move ── */
+    const scene = document.getElementById('scene');
+    const card  = document.getElementById('card3d');
+    scene.addEventListener('mousemove', e => {
+        const rect = scene.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top  + rect.height / 2;
+        const rotX = ((e.clientY - cy) / rect.height) * -8;
+        const rotY = ((e.clientX - cx) / rect.width)  *  8;
+        card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    });
+    scene.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    });
+
+    /* ── Email decryption ── */
+    document.addEventListener('DOMContentLoaded', () => {
+        const el = document.getElementById('contact-email-display');
+        if (el) el.textContent = atob('a3Njb3JlbGFic0BnbWFpbC5jb20=');
+    });
+
+    /* ── Toast helper ── */
+    function showToast(type, msg) {
+        const c = document.getElementById('toast-container');
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.style.background = type === 'success'
+            ? 'rgba(22,101,52,0.95)'
+            : 'rgba(127,29,29,0.95)';
+        t.innerHTML = `<i class="fa-solid fa-${type==='success'?'circle-check':'triangle-exclamation'}"></i><span>${msg}</span>`;
+        c.appendChild(t);
+        setTimeout(() => {
+            t.classList.add('fade-out');
+            setTimeout(() => t.remove(), 300);
+        }, 4500);
+    }
+
+    /* ── Contact form → Google Sheets ── */
+    (function(){
+        try {
+            const _a = atob('aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy8=');
+            const _b = atob('QUtmeWNidzFPQkxhYllRQjZyX0tuWG05a3dtUUZFRkFqd3oxNA==');
+            const _c = atob('Xzc1VVZTb2RrV0dobWVwZi1SOENXbHNpblY5UzliMW5rVG5Pdw==');
+            const _d = atob('L2V4ZWM=');
+            const ENDPOINT = _a + _b + _c + _d;
+            const _tk = atob('RFRNUC0yMDI2LVNFQ1JFVA==');
+
+            const form   = document.getElementById('contact-form');
+            const submit = document.getElementById('cf-submit');
+            const icon   = document.getElementById('cf-icon');
+            const btnTxt = document.getElementById('cf-btn-text');
+
+            form.addEventListener('submit', async e => {
+                e.preventDefault();
+                if (!form.checkValidity()) { form.reportValidity(); return; }
+
+                submit.disabled = true;
+                icon.className  = 'fa-solid fa-spinner spinner';
+                btnTxt.textContent = 'Sending…';
+
+                const payload = {
+                    token:   _tk,
+                    name:    document.getElementById('cf-name').value.trim(),
+                    email:   document.getElementById('cf-email').value.trim(),
+                    subject: document.getElementById('cf-subject').value.trim(),
+                    message: document.getElementById('cf-message').value.trim(),
+                    date:    new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+                };
+
+                try {
+                    await fetch(ENDPOINT, {
+                        method: 'POST', mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload),
+                    });
+                    showToast('success', "Message sent! We'll get back to you soon.");
+                    form.reset();
+                } catch {
+                    showToast('error', 'Failed to send. Please try again or email us directly.');
+                } finally {
+                    submit.disabled = false;
+                    icon.className  = 'fa-solid fa-paper-plane';
+                    btnTxt.textContent = 'Send Message';
+                }
+            });
+        } catch(err) {
+            console.error('[Contact] setup error', err);
+        }
+    })();
+</script>
+</body>
+</html>
