@@ -965,3 +965,161 @@ footer {
     }
 }
 
+/* ============================================================
+   LIGHT THEME OVERRIDES
+   ============================================================ */
+[data-theme="light"] {
+    --bg-color: #f4f6fa;
+    --surface-color: #ffffff;
+    --text-primary: #11111a;
+    --text-secondary: #5a5a6e;
+    --border-light: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] body {
+    background-color: var(--bg-color);
+}
+
+[data-theme="light"] .navbar {
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid var(--border-light);
+}
+
+[data-theme="light"] .feature-card {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .feature-card:hover {
+    background: #ffffff;
+    box-shadow: 0 12px 40px rgba(0, 210, 255, 0.15);
+}
+
+[data-theme="light"] .developer-profile,
+[data-theme="light"] .contact-info {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .contact-form input,
+[data-theme="light"] .contact-form textarea {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .social-btn {
+    background: #f0f0f0;
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+
+[data-theme="light"] .social-btn:hover {
+    background: #e0e0e0;
+}
+
+[data-theme="light"] .store-btn {
+    background: #ffffff;
+    color: #111;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .store-btn:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+/* ============================================================
+   THEME TOGGLE BUTTON
+   ============================================================ */
+.nav-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.theme-toggle-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.05);
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(0, 210, 255, 0.1);
+    border-color: var(--primary-color);
+    transform: rotate(15deg) scale(1.1);
+    color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+}
+
+[data-theme="light"] .theme-toggle-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: var(--border-light);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.theme-toggle-btn .moon-icon {
+    display: none;
+}
+
+[data-theme="light"] .theme-toggle-btn .sun-icon {
+    display: none;
+}
+
+[data-theme="light"] .theme-toggle-btn .moon-icon {
+    display: block;
+}
+
+[data-theme="dark"] .theme-toggle-btn .moon-icon {
+    display: none;
+}
+
+[data-theme="dark"] .theme-toggle-btn .sun-icon {
+    display: block;
+}
+
+/* ============================================================
+   DOWNLOAD COUNTER BADGE
+   ============================================================ */
+.download-count-badge {
+    position: absolute;
+    top: -12px;
+    right: -10px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 210, 255, 0.4);
+    border: 2px solid var(--surface-color);
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+[data-theme="light"] .download-count-badge {
+    border-color: #ffffff;
+}
+
+.store-btn.github-btn {
+    position: relative; /* For absolute positioning of badge */
+}
+
+@keyframes popIn {
+    0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}

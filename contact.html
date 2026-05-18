@@ -284,6 +284,59 @@
             .card-3d { padding: 2rem 1.25rem; }
             .back-btn { top: 1rem; left: 1rem; }
         }
+
+        /* ── Theme Toggle & Light Mode ── */
+        [data-theme="light"] {
+            --bg: #f4f6fa;
+            --accent: #3b82f6;
+            --accent2: #a78bfa;
+            --accent3: #06b6d4;
+            --text: #0f172a;
+            --muted: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --border: rgba(0, 0, 0, 0.1);
+            --glow: rgba(59, 130, 246, 0.15);
+        }
+        [data-theme="light"] body {
+            background-image: none;
+        }
+        [data-theme="light"] .info-panel h2 {
+            background: linear-gradient(135deg, #0f172a, #64748b);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        [data-theme="light"] .info-item {
+            background: rgba(59,130,246,0.03);
+            border: 1px solid rgba(59,130,246,0.1);
+        }
+        [data-theme="light"] .input-wrap input,
+        [data-theme="light"] .input-wrap textarea {
+            background: #ffffff;
+            color: var(--text);
+        }
+        
+        .theme-toggle-btn {
+            position: fixed; top: 1.5rem; right: 1.5rem; z-index: 100;
+            background: rgba(15,23,42,0.7); backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; transition: all 0.3s ease;
+        }
+        .theme-toggle-btn:hover {
+            border-color: var(--accent); box-shadow: 0 0 18px var(--glow);
+            transform: rotate(15deg) scale(1.1); color: var(--accent);
+        }
+        [data-theme="light"] .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: var(--border);
+        }
+        .theme-toggle-btn .moon-icon { display: none; }
+        [data-theme="light"] .theme-toggle-btn .sun-icon { display: none; }
+        [data-theme="light"] .theme-toggle-btn .moon-icon { display: block; }
+        [data-theme="dark"] .theme-toggle-btn .moon-icon { display: none; }
+        [data-theme="dark"] .theme-toggle-btn .sun-icon { display: block; }
+        @media(max-width:720px) { .theme-toggle-btn { top: 1rem; right: 1rem; } }
     </style>
 </head>
 <body>
@@ -293,6 +346,11 @@
 <a href="index.html" class="back-btn" id="back-link">
     <i class="fa-solid fa-arrow-left"></i> Back to DTMP
 </a>
+
+<button class="theme-toggle-btn theme-toggle" aria-label="Toggle Theme">
+    <i class="fa-solid fa-sun sun-icon"></i>
+    <i class="fa-solid fa-moon moon-icon"></i>
+</button>
 
 <div class="page">
     <header class="page-header">
@@ -494,6 +552,28 @@
         } catch(err) {
             console.error('[Contact] setup error', err);
         }
+    })();
+    
+    /* ── Theme Toggle ── */
+    (function() {
+        const themeToggles = document.querySelectorAll('.theme-toggle');
+        let savedTheme = localStorage.getItem('dtmp-theme') || 'dark';
+        if (savedTheme === 'light') { document.documentElement.setAttribute('data-theme', 'light'); } 
+        else { document.documentElement.setAttribute('data-theme', 'dark'); }
+        
+        themeToggles.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+                if (currentTheme !== 'light') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('dtmp-theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('dtmp-theme', 'dark');
+                }
+            });
+        });
     })();
 </script>
 </body>

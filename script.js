@@ -40,6 +40,15 @@ async function downloadApk() {
         icon.className = 'fa-solid fa-circle-check';
         smallText.textContent = 'Download';
         largeText.textContent = 'Started!';
+        
+        // Visually increment the counter
+        const badge = document.getElementById('apk-download-badge');
+        if (badge && badge.dataset.count) {
+            let currentCount = parseInt(badge.dataset.count, 10);
+            currentCount++;
+            badge.textContent = currentCount + " Downloads";
+            badge.dataset.count = currentCount;
+        }
 
         setTimeout(() => {
             icon.className = 'fa-brands fa-android';
@@ -273,3 +282,59 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize positions
     updateStack();
 });
+
+// ── Fetch Global Download Count ──────────────────────────────
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const response = await fetch(
+            'https://api.github.com/repos/KSCoreLabs/DTMP-Updates/releases/latest',
+            { headers: { 'Accept': 'application/vnd.github+json' } }
+        );
+        if (response.ok) {
+            const data = await response.json();
+            const apkAsset = data.assets && data.assets.find(a => a.name.endsWith('.apk'));
+            if (apkAsset && apkAsset.download_count !== undefined) {
+                const badge = document.getElementById('apk-download-badge');
+                if (badge) {
+                    badge.textContent = apkAsset.download_count + " Downloads";
+                    badge.dataset.count = apkAsset.download_count;
+                }
+            }
+        }
+    } catch (e) {
+        console.error("Failed to fetch download count", e);
+    }
+});
+
+// ── Theme Toggle ──────────────────────────────────────────────
+(function() {
+    const themeToggles = document.querySelectorAll('.theme-toggle');
+    
+    // Check saved theme, default to dark
+    let savedTheme = localStorage.getItem('dtmp-theme');
+    if (!savedTheme) {
+        savedTheme = 'dark';
+        localStorage.setItem('dtmp-theme', 'dark');
+    }
+
+    if (savedTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    
+    themeToggles.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            
+            if (currentTheme !== 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('dtmp-theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('dtmp-theme', 'dark');
+            }
+        });
+    });
+})();

@@ -101,6 +101,12 @@
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="#download" class="nav-btn">Download</a></li>
             </ul>
+            <div class="nav-actions-group">
+                <button class="theme-toggle-btn theme-toggle" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-sun sun-icon"></i>
+                    <i class="fa-solid fa-moon moon-icon"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -187,12 +193,14 @@
     </section>
 
     <section id="download" class="download-section reveal">
-        <h2>Download DTMP</h2>
+ 
+ .       <h2>Download DTMP</h2>
         <p>Get the latest version of DTMP to secure your phone today.</p>
         
         <div class="download-options">
             <!-- Direct APK Download -->
             <button onclick="downloadApk()" class="store-btn github-btn" id="apk-download-btn">
+                <div class="download-count-badge" id="apk-download-badge" data-count="0">0 Downloads</div>
                 <i class="fa-brands fa-android"></i>
                 <div class="btn-text">
                     <span class="small-text">Download The</span>
